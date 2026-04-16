@@ -1,0 +1,12 @@
+{
+  "name": "polifracturas-web",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "npm install --prefix client && npm run build --prefix client",
+    "start": "node server/index.js",
+    "install-deps": "npm install --prefix server"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
