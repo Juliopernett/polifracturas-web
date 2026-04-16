@@ -1,26 +1,25 @@
 const express = require('express')
 const router = express.Router()
-const nodemailer = require('nodemailer')
 
-function createTransporter() {
-  return nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
-    family: 4,
-    connectionTimeout: 10000,
-    greetingTimeout: 10000,
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
+async function sendEmail({ to, subject, html }) {
+  const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+    method: 'POST',
+    headers: {
+      'api-key': process.env.BREVO_API_KEY,
+      'Content-Type': 'application/json',
     },
+    body: JSON.stringify({
+      sender: { name: 'Sitio Web Polifracturas', email: process.env.EMAIL_USER },
+      to: [{ email: to }],
+      subject,
+      htmlContent: html,
+    }),
   })
+  if (!res.ok) {
+    const err = await res.text()
+    throw new Error(err)
+  }
 }
-
-// Log de variables al arrancar para diagnóstico
-console.log('EMAIL_USER configurado:', !!process.env.EMAIL_USER)
-console.log('EMAIL_PASS configurado:', !!process.env.EMAIL_PASS)
-console.log('ADMIN_EMAIL configurado:', !!process.env.ADMIN_EMAIL)
 
 router.post('/', async (req, res) => {
   const { name, email, phone, message } = req.body
@@ -29,9 +28,7 @@ router.post('/', async (req, res) => {
   }
 
   try {
-    const transporter = createTransporter()
-    await transporter.sendMail({
-      from: `"Sitio Web Polifracturas" <${process.env.EMAIL_USER}>`,
+    await sendEmail({
       to: process.env.ADMIN_EMAIL,
       subject: `Nuevo mensaje de contacto - ${name}`,
       html: `
@@ -45,7 +42,7 @@ router.post('/', async (req, res) => {
     })
     res.json({ ok: true })
   } catch (err) {
-    console.error('Error enviando email de contacto:', err.message, err.code, err.response)
+    console.error('Error enviando email de contacto:', err.message)
     res.status(500).json({ error: 'Error al enviar el mensaje.' })
   }
 })

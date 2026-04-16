@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const multer = require('multer')
 const path = require('path')
-const nodemailer = require('nodemailer')
 const fs = require('fs')
 
 const uploadsDir = path.join(__dirname, '..', 'uploads')
@@ -25,17 +24,24 @@ const upload = multer({
   },
 })
 
-function createTransporter() {
-  return nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
-    family: 4,
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
+async function sendEmail({ to, subject, html }) {
+  const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+    method: 'POST',
+    headers: {
+      'api-key': process.env.BREVO_API_KEY,
+      'Content-Type': 'application/json',
     },
+    body: JSON.stringify({
+      sender: { name: 'Sitio Web Polifracturas', email: process.env.EMAIL_USER },
+      to: [{ email: to }],
+      subject,
+      htmlContent: html,
+    }),
   })
+  if (!res.ok) {
+    const err = await res.text()
+    throw new Error(err)
+  }
 }
 
 router.post('/', upload.single('cv'), async (req, res) => {
@@ -45,9 +51,7 @@ router.post('/', upload.single('cv'), async (req, res) => {
   }
 
   try {
-    const transporter = createTransporter()
-    await transporter.sendMail({
-      from: `"Sitio Web Polifracturas" <${process.env.EMAIL_USER}>`,
+    await sendEmail({
       to: process.env.ADMIN_EMAIL,
       subject: `Nueva postulación - ${position} - ${name}`,
       html: `
@@ -56,14 +60,8 @@ router.post('/', upload.single('cv'), async (req, res) => {
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Cargo:</strong> ${position}</p>
         <p><strong>Mensaje:</strong> ${message || 'Sin mensaje'}</p>
-        <p>La hoja de vida se adjunta a este correo.</p>
+        <p><em>La hoja de vida fue guardada en el servidor.</em></p>
       `,
-      attachments: [
-        {
-          filename: req.file.originalname,
-          path: req.file.path,
-        },
-      ],
     })
     res.json({ ok: true })
   } catch (err) {
