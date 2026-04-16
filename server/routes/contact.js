@@ -8,12 +8,19 @@ function createTransporter() {
     port: 465,
     secure: true,
     family: 4,
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
     },
   })
 }
+
+// Log de variables al arrancar para diagnóstico
+console.log('EMAIL_USER configurado:', !!process.env.EMAIL_USER)
+console.log('EMAIL_PASS configurado:', !!process.env.EMAIL_PASS)
+console.log('ADMIN_EMAIL configurado:', !!process.env.ADMIN_EMAIL)
 
 router.post('/', async (req, res) => {
   const { name, email, phone, message } = req.body
