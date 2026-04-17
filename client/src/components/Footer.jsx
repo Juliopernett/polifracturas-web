@@ -5,14 +5,15 @@ export default function Footer() {
     <footer className="bg-[#1E3A5F] text-white mt-auto">
       <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-8">
         <div>
-          <img src="/logo.png" alt="Polifracturas" className="h-12 object-contain mb-4" />
+          <img src="/logo.png" alt="Polifracturas Ciénaga IPS S.A.S." className="h-12 object-contain mb-4" width="120" height="48" />
           <p className="text-gray-300 text-sm leading-relaxed">
-            IPS privada especializada en trauma, ortopedia, cirugía y rehabilitación.
-            Atención de urgencias 24/7.
+            IPS privada especializada en ortopedia, traumatología, cirugía y rehabilitación en
+            <strong className="text-white"> Ciénaga, Magdalena</strong>. Urgencias 24/7.
+            También atendemos pacientes de Santa Marta y el departamento del Magdalena.
           </p>
         </div>
 
-        <div>
+        <nav aria-label="Navegación del footer">
           <h3 className="font-bold text-[#00A896] mb-3 uppercase text-sm tracking-wide">Navegación</h3>
           <ul className="space-y-1 text-sm text-gray-300">
             {[['/', 'Inicio'], ['/nosotros', 'Nosotros'], ['/servicios', 'Servicios'],
@@ -23,21 +24,21 @@ export default function Footer() {
               </li>
             ))}
           </ul>
-        </div>
+        </nav>
 
-        <div>
-          <h3 className="font-bold text-[#00A896] mb-3 uppercase text-sm tracking-wide">Contacto</h3>
+        <address className="not-italic">
+          <h3 className="font-bold text-[#00A896] mb-3 uppercase text-sm tracking-wide not-italic">Contacto</h3>
           <ul className="space-y-2 text-sm text-gray-300">
             <li className="flex gap-2">
-              <span>📍</span>
-              <span>Carrera 21 #21-24, Ciénaga, Magdalena</span>
+              <span aria-hidden="true">📍</span>
+              <span>Carrera 21 #21-24, Ciénaga, Magdalena, Colombia</span>
             </li>
             <li className="flex gap-2">
-              <span>📞</span>
+              <span aria-hidden="true">📞</span>
               <a href="tel:+6054102804" className="hover:text-[#00A896]">(605) 4102804</a>
             </li>
             <li className="flex gap-2">
-              <span>💬</span>
+              <span aria-hidden="true">💬</span>
               <a
                 href="https://wa.me/573000000000"
                 target="_blank"
@@ -48,15 +49,15 @@ export default function Footer() {
               </a>
             </li>
             <li className="flex gap-2">
-              <span>🚨</span>
+              <span aria-hidden="true">🚨</span>
               <span className="text-[#00A896] font-semibold">Urgencias 24/7</span>
             </li>
           </ul>
-        </div>
+        </address>
       </div>
 
       <div className="border-t border-white/10 py-4 text-center text-xs text-gray-400">
-        © {new Date().getFullYear()} Polifracturas Ciénaga IPS S.A.S. — NIT en trámite · Todos los derechos reservados.
+        © {new Date().getFullYear()} Polifracturas Ciénaga IPS S.A.S. · Matrícula Mercantil N° 0170648 · Ciénaga, Magdalena, Colombia · Todos los derechos reservados.
       </div>
     </footer>
   )

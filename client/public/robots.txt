@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://polifracturas-web-production.up.railway.app/sitemap.xml

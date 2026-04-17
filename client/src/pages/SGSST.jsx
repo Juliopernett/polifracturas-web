@@ -1,4 +1,5 @@
 import PageHero from '../components/PageHero'
+import SEO from '../components/SEO'
 
 const components = [
   { icon: '📋', title: 'Política SST', desc: 'Política de seguridad y salud en el trabajo aprobada por la alta dirección y socializada con todos los colaboradores.' },
@@ -11,14 +12,19 @@ const components = [
 
 export default function SGSST() {
   return (
-    <div>
+    <>
+      <SEO
+        title="SG-SST — Sistema de Gestión de Seguridad y Salud en el Trabajo"
+        description="Sistema de Gestión de Seguridad y Salud en el Trabajo de Polifracturas Ciénaga IPS S.A.S. Cumplimiento del Decreto 1072 de 2015 y Resolución 0312 de 2019 en Ciénaga, Magdalena."
+        keywords="SG-SST IPS Ciénaga, seguridad salud trabajo Magdalena, Decreto 1072 IPS, salud ocupacional Ciénaga"
+        path="/sgsst"
+      />
       <PageHero
         title="SG-SST"
-        subtitle="Sistema de Gestión de Seguridad y Salud en el Trabajo"
+        subtitle="Sistema de Gestión de Seguridad y Salud en el Trabajo — Polifracturas Ciénaga IPS S.A.S."
       />
 
       <section className="py-16 px-6 max-w-5xl mx-auto">
-        {/* Intro */}
         <div className="bg-[#1E3A5F] text-white rounded-2xl p-10 mb-12">
           <h2 className="text-2xl font-bold mb-4 text-[#00A896]">¿Qué es el SG-SST?</h2>
           <p className="text-white/90 leading-relaxed mb-4">
@@ -28,28 +34,26 @@ export default function SGSST() {
             acciones de mejora.
           </p>
           <p className="text-white/80 leading-relaxed">
-            En Polifracturas Ciénaga IPS S.A.S. implementamos el SG-SST en cumplimiento del
+            En <strong className="text-white">Polifracturas Ciénaga IPS S.A.S.</strong> implementamos el SG-SST en cumplimiento del
             Decreto 1072 de 2015 y la Resolución 0312 de 2019, como parte de nuestro compromiso
-            con el bienestar de todos nuestros colaboradores.
+            con el bienestar de todos nuestros colaboradores en <strong className="text-white">Ciénaga, Magdalena</strong>.
           </p>
         </div>
 
-        {/* Componentes */}
         <h2 className="text-2xl font-bold text-[#1E3A5F] text-center mb-8">Componentes del SG-SST</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {components.map(c => (
-            <div key={c.title} className="bg-white border border-gray-100 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
-              <div className="text-3xl mb-3">{c.icon}</div>
+            <article key={c.title} className="bg-white border border-gray-100 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+              <div className="text-3xl mb-3" aria-hidden="true">{c.icon}</div>
               <h3 className="font-bold text-[#1E3A5F] mb-2">{c.title}</h3>
               <p className="text-gray-600 text-sm leading-relaxed">{c.desc}</p>
-            </div>
+            </article>
           ))}
         </div>
 
-        {/* Documentos */}
         <div className="bg-gray-50 rounded-xl p-8">
           <h2 className="text-2xl font-bold text-[#1E3A5F] mb-6">Documentos SG-SST</h2>
-          <div className="space-y-3">
+          <ul className="space-y-3">
             {[
               'Política de Seguridad y Salud en el Trabajo',
               'Plan Anual de Trabajo SST',
@@ -58,17 +62,17 @@ export default function SGSST() {
               'Reglamento de Higiene y Seguridad Industrial',
               'Programa de Medicina Preventiva',
             ].map(doc => (
-              <div key={doc} className="flex items-center justify-between bg-white border border-gray-200 rounded-lg px-5 py-3">
+              <li key={doc} className="flex items-center justify-between bg-white border border-gray-200 rounded-lg px-5 py-3">
                 <div className="flex items-center gap-3">
-                  <span>📄</span>
+                  <span aria-hidden="true">📄</span>
                   <span className="text-gray-700 text-sm font-medium">{doc}</span>
                 </div>
                 <span className="text-xs text-gray-400 bg-gray-100 px-3 py-1 rounded-full">Disponible</span>
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
-    </div>
+    </>
   )
 }
