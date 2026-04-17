@@ -24,14 +24,6 @@ const categories = [
         name: 'Cirugía Maxilofacial',
         desc: 'Intervenciones quirúrgicas en fracturas y patologías de la región facial, mandíbula y maxilares.',
       },
-      {
-        name: 'Cirugía General',
-        desc: 'Procedimientos quirúrgicos generales con equipo especializado y protocolos de seguridad estrictos.',
-      },
-      {
-        name: 'Cirugía Plástica y Estética',
-        desc: 'Procedimientos reconstructivos y estéticos realizados por especialistas certificados.',
-      },
     ],
   },
   {
