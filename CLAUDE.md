@@ -3,17 +3,19 @@
 ## Comandos esenciales
 
 ```bash
-# Frontend (React)
-cd polifracturas-web/client
-npm run dev        # Dev server → http://localhost:5173
-npm run build      # Build producción
+# Frontend (React) — desde la raíz del monorepo
+npm run dev --prefix client       # Dev server → http://localhost:5173
+npm run build --prefix client     # Build producción → client/dist/
 
-# Backend (Express)
-cd polifracturas-web/server
-node index.js      # API → http://localhost:3001
+# Backend (Express) — desde la raíz del monorepo
+node server/index.js              # API → http://localhost:3001
+
+# O desde las subcarpetas:
+cd client && npm run dev
+cd server && node index.js
 ```
 
-El frontend hace proxy de `/api/*` al backend (configurado en `vite.config.js`).
+El frontend hace proxy de `/api/*` al backend en dev (configurado en `vite.config.js`).
 
 ---
 
@@ -24,9 +26,10 @@ El frontend hace proxy de `/api/*` al backend (configurado en `vite.config.js`).
 | Frontend | React 18 + Vite + Tailwind CSS v4 (`@tailwindcss/vite`) |
 | Router | React Router DOM v7 |
 | HTTP client | Axios |
-| Backend | Node.js + Express |
-| Email | Nodemailer (Gmail) |
-| Upload de archivos | Multer (PDFs, máx 5 MB) |
+| Backend | Node.js + Express 5 |
+| Email | **Brevo HTTP API** (fetch nativo, no Nodemailer) |
+| Upload de archivos | Multer v2 (PDFs, máx 5 MB) |
+| Imágenes | WebP (convertidas con Sharp para máximo rendimiento) |
 
 ---
 
@@ -34,13 +37,16 @@ El frontend hace proxy de `/api/*` al backend (configurado en `vite.config.js`).
 
 ```
 polifracturas-web/
+├── package.json                 ← RAÍZ: scripts build/start para Railway
+├── CLAUDE.md
+├── nixpacks.toml                ← Fallback (Railway usa Railpack ahora)
 ├── client/
-│   ├── public/                  ← Imágenes estáticas (ver tabla abajo)
+│   ├── public/                  ← Imágenes estáticas WebP
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── Navbar.jsx       ← Sticky, responsive, con burger menu mobile
+│   │   │   ├── Navbar.jsx       ← Sticky, responsive, burger menu mobile
 │   │   │   ├── Footer.jsx       ← 3 columnas: logo, nav, contacto
-│   │   │   └── PageHero.jsx     ← Hero reutilizable con bgImage prop
+│   │   │   └── PageHero.jsx     ← Hero reutilizable con prop bgImage
 │   │   ├── pages/
 │   │   │   ├── Home.jsx
 │   │   │   ├── About.jsx
@@ -51,19 +57,19 @@ polifracturas-web/
 │   │   │   ├── Contact.jsx
 │   │   │   ├── WorkWithUs.jsx
 │   │   │   └── PQRS.jsx
-│   │   ├── App.jsx              ← BrowserRouter + Routes
+│   │   ├── App.jsx              ← BrowserRouter + Routes (9 rutas)
 │   │   ├── main.jsx
-│   │   └── index.css            ← @import "tailwindcss" + reset
+│   │   └── index.css            ← @import "tailwindcss"
 │   ├── index.html               ← lang="es", Google Fonts Inter, meta description
-│   └── vite.config.js           ← plugins: [react(), tailwindcss()], proxy /api
+│   └── vite.config.js           ← plugins: [react(), tailwindcss()], proxy /api → :3001
 └── server/
-    ├── index.js                 ← Express entry, puerto 3001
+    ├── index.js                 ← Entry point; IPv4 DNS forzado; sirve /client/dist en prod
     ├── routes/
-    │   ├── contact.js           ← POST /api/contact
-    │   ├── pqrs.js              ← POST /api/pqrs (genera número de radicado)
-    │   └── jobs.js              ← POST /api/jobs (Multer, adjunta CV por email)
+    │   ├── contact.js           ← POST /api/contact → Brevo API
+    │   ├── pqrs.js              ← POST /api/pqrs → radicado PQRS-YYYYMMDD-XXXX + Brevo
+    │   └── jobs.js              ← POST /api/jobs → Multer PDF + Brevo
     ├── uploads/                 ← CVs recibidos (gitignored)
-    └── .env                     ← EMAIL_USER, EMAIL_PASS, ADMIN_EMAIL, PORT
+    └── .env                     ← ver variables abajo
 ```
 
 ---
@@ -74,7 +80,7 @@ polifracturas-web/
 |------|-----------|-------------|
 | `/` | `Home.jsx` | Hero con banner, cards de servicios, sección nosotros, CTA |
 | `/nosotros` | `About.jsx` | Historia, misión, visión, valores, objetivos, mapa de procesos |
-| `/servicios` | `Services.jsx` | Tabs por categoría + tecnología disponible |
+| `/servicios` | `Services.jsx` | Tabs por categoría + sección tecnología |
 | `/calidad` | `Quality.jsx` | Política de calidad oficial, pilares, normatividad |
 | `/financiero` | `Financial.jsx` | Información financiera institucional |
 | `/sgsst` | `SGSST.jsx` | Sistema de Gestión SST, documentos |
@@ -84,22 +90,22 @@ polifracturas-web/
 
 ---
 
-## Imágenes disponibles en `/client/public/`
+## Imágenes en `/client/public/` (todas en WebP)
 
 | Archivo | Contenido | Usado en |
 |---------|-----------|----------|
 | `logo.png` | Logo oficial Polifracturas | Navbar, Footer |
-| `banner.png` | Banner con logo + "Urgencias 24/7" | Hero de Home (fondo) |
-| `fachada.png` | Fachada exterior sede (toma 1) | Contact |
-| `fachada2.png` | Fachada exterior sede (toma 2, logo visible) | Home, About |
-| `medicos-juntos.png` | Equipo médico reunido | About, Quality, Services CTA |
-| `ortopedia.png` | Sala de ortopedia y traumatología | Services hero, tab Quirúrgicos |
-| `cirugia.png` | Instrumental quirúrgico en sala | Services (tecnología), CTA home |
-| `urgencias.png` | Sala de urgencias real | Services tab Clínicos, Home card |
-| `camilla.png` | Habitación hospitalaria | Home about, Services tab Clínicos |
-| `ayudas_diagnosticas.png` | Sala TAC / diagnóstico imágenes | Services tab Diagnósticos, Home card |
-| `rehabilitacion.png` | Sesión de fisioterapia | Services tab Rehabilitación, PageHero |
-| `mapa-procesos.jpeg` | Mapa de procesos institucional | About |
+| `banner.webp` | Banner hero | Hero de Home (fondo) |
+| `fachada.webp` | Fachada exterior sede (toma 1) | Contact |
+| `fachada2.webp` | Fachada exterior sede (toma 2) | Home, About |
+| `medicos-juntos.webp` | Equipo médico reunido | About, Quality, Services CTA |
+| `ortopedia.webp` | Sala de ortopedia | Services tab Quirúrgicos |
+| `cirugia.webp` | Sala quirúrgica | Services (tecnología), CTA Home |
+| `urgencias.webp` | Sala de urgencias | Services tab Clínicos, Home card |
+| `camilla.webp` | Habitación hospitalaria | Home card, Quality PageHero |
+| `ayudas_diagnosticas.webp` | Sala de diagnóstico imágenes | Services tab Diagnósticos, Home card |
+| `rehabilitacion.webp` | Sesión de fisioterapia | Services tab Rehabilitación, Contact PageHero |
+| `mapa-procesos.webp` | Mapa de procesos institucional | About |
 
 ---
 
@@ -112,37 +118,58 @@ polifracturas-web/
 | Overlay hero | `bg-[#1E3A5F]/88` | Sobre imágenes de fondo |
 | Fuente | Inter (Google Fonts) | Todo el sitio |
 
-**PageHero** acepta prop `bgImage` (default `/cirugia.png`) para cambiar la imagen de fondo por página.
+**PageHero** acepta prop `bgImage` (default `/cirugia.webp`).
 
 ---
 
 ## Backend — Endpoints API
 
 ### `POST /api/contact`
-Campos: `name`, `email`, `phone`, `message`
-→ Envía email al `ADMIN_EMAIL`
+Campos: `name`, `email`, `phone`, `message`  
+→ Envía email al `ADMIN_EMAIL` vía Brevo HTTP API
 
 ### `POST /api/pqrs`
-Campos: `type` (peticion/queja/reclamo/sugerencia), `name`, `email`, `phone`, `message`
-→ Genera radicado `PQRS-YYYYMMDD-XXXX`
-→ Email al admin + email de confirmación al usuario con el radicado
+Campos: `type` (peticion/queja/reclamo/sugerencia), `name`, `email`, `phone`, `message`  
+→ Genera radicado `PQRS-YYYYMMDD-XXXX`  
+→ Email al admin + confirmación al usuario con número de radicado
 
 ### `POST /api/jobs`
-Campos: `name`, `email`, `position`, `message` + archivo `cv` (PDF, máx 5 MB)
-→ Guarda PDF en `server/uploads/`
-→ Envía email al admin con el PDF adjunto
+Campos: `name`, `email`, `position`, `message` + archivo `cv` (PDF, máx 5 MB)  
+→ Guarda PDF en `server/uploads/`  
+→ Email al admin con adjunto
 
-### `.env` del servidor
+### Variables de entorno (`.env` del servidor / Railway)
+
 ```
-EMAIL_USER=correo@gmail.com
-EMAIL_PASS=contraseña_de_aplicacion_gmail
-ADMIN_EMAIL=admin@polifracturas.com
-PORT=3001
+BREVO_API_KEY=xkeysib-...     ← API key de Brevo (NO la SMTP key xsmtpsib-)
+EMAIL_USER=noreply@polifracturas.com   ← remitente verificado en Brevo
+ADMIN_EMAIL=admin@polifracturas.com    ← destinatario de formularios
+PORT=3001                              ← Railway inyecta PORT=8080 en producción
 ```
+
+**Importante**: usar la API key (`xkeysib-...`) de Brevo → SMTP & API → API Keys, NO la SMTP key (`xsmtpsib-...`).
 
 ---
 
-## Información institucional real (fuente: `inf. polifracturas.txt`)
+## Despliegue en Railway
+
+- **Repo GitHub**: `https://github.com/Juliopernett/polifracturas-web.git` (rama `master`)
+- **URL producción**: `https://polifracturas-web-production.up.railway.app/`
+- **Builder**: Railpack (lee `package.json` raíz)
+- **Build**: `npm install --prefix client && npm run build --prefix client`
+- **Start**: `node server/index.js`
+- **Puerto Railway**: configurado en 8080 (variable `PORT` inyectada automáticamente)
+
+Para desplegar: `git push origin master` → Railway auto-deploys.
+
+### Cosas que NO hacer en Railway
+- No poner el puerto de escucha en 5173 (es el dev port de Vite)
+- No usar Nodemailer con Gmail SMTP — Railway bloquea IPv6 a Gmail (ENETUNREACH)
+- No usar `xsmtpsib-` keys de Brevo — solo funciona la API key `xkeysib-`
+
+---
+
+## Información institucional real
 
 - **Razón social**: Polifracturas Ciénaga IPS S.A.S.
 - **Matrícula mercantil**: N° 0170648 — Cámara de Comercio de Santa Marta
@@ -150,18 +177,10 @@ PORT=3001
 - **Nivel de atención**: I y II
 - **Dirección**: Carrera 21 #21-24, Ciénaga, Magdalena
 - **Teléfono**: (605) 4102804
-- **Horario urgencias**: 24 horas / 7 días
+- **Horario urgencias**: 24 horas / 7 días / 365 días
 - **Horario ambulatorio**: Lunes a Viernes 7:00 a.m. – 4:30 p.m.
 - **Normativa**: Resolución 2003 de 2014 del Ministerio de la Protección Social
 - **Convenios diagnósticos**: Policlínica Ciénaga (laboratorio, tomografía, ultrasonografía)
-
-### Servicios reales documentados
-- **Urgencias**: consultorio independiente, sala reanimación, sala yeso, 7 camas observación
-- **Hospitalización**: 2 habitaciones bipersonales
-- **Cirugías**: ortopédica, mano, maxilofacial, general, plástica y estética
-- **Diagnóstico**: laboratorio, tomografía, ultrasonografía, sala imágenes para ortopedia
-- **Rehabilitación**: fisioterapia, medicina física, terapia ocupacional, rehabilitación neurológica
-- **Tecnología**: instrumental última generación para trauma ortopédico mayor, pelvis-acetábulo, trauma apendicular; mesas quirúrgicas especializadas
 
 ---
 
@@ -169,9 +188,9 @@ PORT=3001
 
 ```
 C:\Users\JULIO PERNETT\Desktop\PROYECTOS IA\Polifracturas\
-├── PRD.txt                        ← Requisitos del proyecto
-├── inf. polifracturas.txt         ← Contenido real (misión, visión, servicios...)
-├── logo_mejor_calidad.png         ← Logo original (copiado como logo.png)
-├── MAPA PROCESOS POLIFRACTURAS.jpeg
-└── recursos/                      ← Imágenes originales sin renombrar
+├── PRD.txt                              ← Requisitos del proyecto
+├── inf. polifracturas.txt               ← Contenido real (misión, visión, servicios...)
+├── logo_mejor_calidad.png               ← Logo original
+├── MAPA PROCESOS POLIFRACTURAS.jpeg     ← Original del mapa de procesos
+└── recursos/                            ← Imágenes originales sin renombrar
 ```

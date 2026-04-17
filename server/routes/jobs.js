@@ -24,26 +24,6 @@ const upload = multer({
   },
 })
 
-async function sendEmail({ to, subject, html }) {
-  const res = await fetch('https://api.brevo.com/v3/smtp/email', {
-    method: 'POST',
-    headers: {
-      'api-key': process.env.BREVO_API_KEY,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      sender: { name: 'Sitio Web Polifracturas', email: process.env.EMAIL_USER },
-      to: [{ email: to }],
-      subject,
-      htmlContent: html,
-    }),
-  })
-  if (!res.ok) {
-    const err = await res.text()
-    throw new Error(err)
-  }
-}
-
 router.post('/', upload.single('cv'), async (req, res) => {
   const { name, email, position, message } = req.body
   if (!name || !email || !position || !req.file) {
@@ -51,18 +31,45 @@ router.post('/', upload.single('cv'), async (req, res) => {
   }
 
   try {
-    await sendEmail({
-      to: process.env.ADMIN_EMAIL,
+    const cvBase64 = fs.readFileSync(req.file.path).toString('base64')
+
+    const payload = {
+      sender: { name: 'Sitio Web Polifracturas', email: process.env.EMAIL_USER },
+      to: [{ email: process.env.ADMIN_EMAIL }],
       subject: `Nueva postulación - ${position} - ${name}`,
-      html: `
+      htmlContent: `
         <h2>Nueva postulación recibida</h2>
         <p><strong>Nombre:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Cargo:</strong> ${position}</p>
         <p><strong>Mensaje:</strong> ${message || 'Sin mensaje'}</p>
-        <p><em>La hoja de vida fue guardada en el servidor.</em></p>
+        <p>La hoja de vida se adjunta a este correo.</p>
       `,
+      attachment: [
+        {
+          content: cvBase64,
+          name: req.file.originalname || 'hoja_de_vida.pdf',
+        },
+      ],
+    }
+
+    const apiRes = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: {
+        'api-key': process.env.BREVO_API_KEY,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
     })
+
+    // Borrar el archivo temporal del servidor después de enviarlo
+    fs.unlinkSync(req.file.path)
+
+    if (!apiRes.ok) {
+      const err = await apiRes.text()
+      throw new Error(err)
+    }
+
     res.json({ ok: true })
   } catch (err) {
     console.error('Error enviando postulación:', err.message)
