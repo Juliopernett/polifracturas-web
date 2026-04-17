@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async'
 
 const SITE_NAME = 'Polifracturas Ciénaga IPS S.A.S.'
-const BASE_URL = 'https://polifracturas-web-production.up.railway.app'
+const BASE_URL = 'https://polifracturascienaga.com'
 const DEFAULT_IMAGE = `${BASE_URL}/banner.webp`
 const DEFAULT_DESCRIPTION =
   'Clínica especializada en fracturas, ortopedia y traumatología en Ciénaga, Magdalena. Urgencias 24/7. Cirugía, rehabilitación y diagnóstico por imágenes. Llama al (605) 4102804.'
