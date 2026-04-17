@@ -52,7 +52,7 @@ export default function About() {
       <PageHero
         title="Quiénes Somos"
         subtitle="Líderes en la atención de patologías del sistema musculoesquelético en Ciénaga, Magdalena."
-        bgImage="/rehabilitacion.png"
+        bgImage="/rehabilitacion.webp"
       />
 
       {/* Reseña histórica */}
@@ -61,7 +61,7 @@ export default function About() {
           {/* Fotos fachada con stats */}
           <div className="flex-1 relative">
             <img
-              src="/fachada2.png"
+              src="/fachada2.webp"
               alt="Sede Polifracturas Ciénaga IPS"
               className="rounded-2xl shadow-2xl w-full object-cover"
             />
@@ -102,7 +102,7 @@ export default function About() {
         <div className="max-w-6xl mx-auto flex flex-col lg:flex-row-reverse gap-14 items-center">
           <div className="flex-1">
             <img
-              src="/medicos-juntos.png"
+              src="/medicos-juntos.webp"
               alt="Equipo médico Polifracturas"
               className="rounded-2xl shadow-xl w-full object-cover"
             />
@@ -222,7 +222,7 @@ export default function About() {
           <h2 className="text-3xl font-bold text-[#1E3A5F] mt-2 mb-8">Mapa de Procesos</h2>
           <div className="rounded-2xl overflow-hidden shadow-xl border border-gray-200">
             <img
-              src="/mapa-procesos.jpeg"
+              src="/mapa-procesos.webp"
               alt="Mapa de Procesos Polifracturas"
               className="w-full object-contain bg-white"
             />

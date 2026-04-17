@@ -27,7 +27,7 @@ export default function Contact() {
       <PageHero
         title="Contáctanos"
         subtitle="Estamos para atenderte. Escríbenos o llámanos."
-        bgImage="/rehabilitacion.png"
+        bgImage="/rehabilitacion.webp"
       />
 
       <section className="py-16 px-6 max-w-6xl mx-auto">
@@ -107,7 +107,7 @@ export default function Contact() {
             {/* Foto de la sede */}
             <div className="rounded-2xl overflow-hidden shadow-lg border border-gray-100">
               <img
-                src="/fachada.png"
+                src="/fachada.webp"
                 alt="Sede Polifracturas Ciénaga IPS"
                 className="w-full h-44 object-cover"
               />

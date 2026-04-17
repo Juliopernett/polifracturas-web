@@ -13,7 +13,7 @@ export default function Quality() {
       <PageHero
         title="Políticas de Calidad"
         subtitle="Comprometidos con el mejoramiento continuo y la atención integral a nuestros usuarios."
-        bgImage="/camilla.png"
+        bgImage="/camilla.webp"
       />
 
       <section className="py-16 px-6 max-w-5xl mx-auto">
@@ -21,7 +21,7 @@ export default function Quality() {
         <div className="relative rounded-2xl overflow-hidden mb-14 shadow-xl">
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: "url('/medicos-juntos.png')" }}
+            style={{ backgroundImage: "url('/medicos-juntos.webp')" }}
           />
           <div className="absolute inset-0 bg-[#1E3A5F]/90" />
           <div className="relative z-10 p-10 text-white">

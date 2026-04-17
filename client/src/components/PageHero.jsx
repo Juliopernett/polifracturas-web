@@ -1,4 +1,4 @@
-export default function PageHero({ title, subtitle, bgImage = '/cirugia.png' }) {
+export default function PageHero({ title, subtitle, bgImage = '/cirugia.webp' }) {
   return (
     <section className="relative py-20 px-6 overflow-hidden">
       {/* Imagen de fondo */}

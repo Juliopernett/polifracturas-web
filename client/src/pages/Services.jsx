@@ -6,7 +6,7 @@ const categories = [
     id: 'quirurgicos',
     label: 'Ortopedia y Cirugía',
     icon: '🦴',
-    img: '/ortopedia.png',
+    img: '/ortopedia.webp',
     imgAlt: 'Sala de Ortopedia y Traumatología Polifracturas',
     accentBorder: 'border-blue-400',
     badge: null,
@@ -37,7 +37,7 @@ const categories = [
     id: 'clinicos',
     label: 'Urgencias y Hospitalización',
     icon: '🚨',
-    img: '/urgencias.png',
+    img: '/urgencias.webp',
     imgAlt: 'Sala de Urgencias Polifracturas Ciénaga',
     accentBorder: 'border-red-400',
     badge: '24/7',
@@ -64,7 +64,7 @@ const categories = [
     id: 'diagnosticos',
     label: 'Ayudas Diagnósticas',
     icon: '🔬',
-    img: '/ayudas_diagnosticas.png',
+    img: '/ayudas_diagnosticas.webp',
     imgAlt: 'Sala de diagnóstico por imágenes Polifracturas',
     accentBorder: 'border-purple-400',
     badge: null,
@@ -91,7 +91,7 @@ const categories = [
     id: 'rehabilitacion',
     label: 'Rehabilitación',
     icon: '🏃',
-    img: '/rehabilitacion.png',
+    img: '/rehabilitacion.webp',
     imgAlt: 'Servicio de rehabilitación Polifracturas',
     accentBorder: 'border-green-400',
     badge: null,
@@ -125,7 +125,7 @@ export default function Services() {
       <PageHero
         title="Nuestros Servicios"
         subtitle="Atención integral en ortopedia, traumatología, cirugía, diagnóstico y rehabilitación bajo un mismo techo."
-        bgImage="/ortopedia.png"
+        bgImage="/ortopedia.webp"
       />
 
       {/* Horarios rápidos */}
@@ -233,7 +233,7 @@ export default function Services() {
             </div>
             <div className="hidden md:block">
               <img
-                src="/cirugia.png"
+                src="/cirugia.webp"
                 alt="Sala de cirugía Polifracturas"
                 className="w-full h-full object-cover opacity-70"
               />
@@ -243,7 +243,7 @@ export default function Services() {
 
         {/* CTA */}
         <div className="mt-10 relative rounded-2xl overflow-hidden">
-          <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('/medicos-juntos.png')" }} />
+          <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: "url('/medicos-juntos.webp')" }} />
           <div className="absolute inset-0 bg-[#1E3A5F]/88" />
           <div className="relative z-10 p-10 text-center text-white">
             <h3 className="text-2xl font-bold mb-3">¿Tienes alguna consulta?</h3>

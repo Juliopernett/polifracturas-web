@@ -5,49 +5,49 @@ const featuredServices = [
     icon: '🦴',
     title: 'Ortopedia y Traumatología',
     desc: 'Atención especializada en lesiones óseas y articulares con cirujanos de alta experiencia.',
-    img: '/ortopedia.png',
+    img: '/ortopedia.webp',
   },
   {
     icon: '🔪',
     title: 'Cirugía Especializada',
     desc: 'Cirugía ortopédica, de mano, maxilofacial, general y estética en sala equipada.',
-    img: '/cirugia.png',
+    img: '/cirugia.webp',
   },
   {
     icon: '🏃',
     title: 'Rehabilitación Integral',
     desc: 'Fisioterapia, terapia ocupacional y rehabilitación neurológica para tu recuperación.',
-    img: '/rehabilitacion.png',
+    img: '/rehabilitacion.webp',
   },
   {
     icon: '🚨',
     title: 'Urgencias 24/7',
     desc: 'Sala de reanimación, sala de yeso y observación con 7 camas. Atención inmediata los 365 días.',
-    img: '/urgencias.png',
+    img: '/urgencias.webp',
   },
   {
     icon: '🏥',
     title: 'Hospitalización',
     desc: 'Habitaciones bipersonales con monitoreo continuo y atención médica permanente.',
-    img: '/camilla.png',
+    img: '/camilla.webp',
   },
   {
     icon: '🔬',
     title: 'Diagnóstico por Imágenes',
     desc: 'Laboratorio clínico, tomografía y ultrasonografía para un diagnóstico preciso.',
-    img: '/ayudas_diagnosticas.png',
+    img: '/ayudas_diagnosticas.webp',
   },
 ]
 
 export default function Home() {
   return (
     <div>
-      {/* Hero con banner.png de fondo */}
+      {/* Hero con banner.webp de fondo */}
       <section className="relative min-h-[540px] md:min-h-[620px] flex items-center overflow-hidden">
         {/* Imagen de fondo */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/banner.png')" }}
+          style={{ backgroundImage: "url('/banner.webp')" }}
         />
         {/* Overlay degradado */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#1E3A5F]/92 via-[#1E3A5F]/75 to-[#1E3A5F]/20" />
@@ -155,12 +155,12 @@ export default function Home() {
           {/* Imágenes apiladas con badge */}
           <div className="flex-1 relative">
             <img
-              src="/fachada2.png"
+              src="/fachada2.webp"
               alt="Sede Polifracturas Ciénaga IPS"
               className="rounded-2xl shadow-xl w-full object-cover max-h-72 md:max-h-80"
             />
             <img
-              src="/medicos-juntos.png"
+              src="/medicos-juntos.webp"
               alt="Equipo médico Polifracturas"
               className="rounded-xl shadow-lg w-2/3 object-cover absolute -bottom-8 -right-4 border-4 border-white h-36 md:h-44"
             />
@@ -207,7 +207,7 @@ export default function Home() {
       <section className="relative py-20 px-6 text-center overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/cirugia.png')" }}
+          style={{ backgroundImage: "url('/cirugia.webp')" }}
         />
         <div className="absolute inset-0 bg-[#1E3A5F]/88" />
         <div className="relative z-10 max-w-3xl mx-auto">
