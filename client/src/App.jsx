@@ -11,6 +11,7 @@ import SGSST from './pages/SGSST'
 import Contact from './pages/Contact'
 import WorkWithUs from './pages/WorkWithUs'
 import PQRS from './pages/PQRS'
+import DataPolicy from './pages/DataPolicy'
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
               <Route path="/contacto" element={<Contact />} />
               <Route path="/trabaja" element={<WorkWithUs />} />
               <Route path="/pqrs" element={<PQRS />} />
+              <Route path="/politica-tratamiento-datos" element={<DataPolicy />} />
             </Routes>
           </main>
           <Footer />

@@ -56,8 +56,13 @@ export default function Footer() {
         </address>
       </div>
 
-      <div className="border-t border-white/10 py-4 text-center text-xs text-gray-400">
-        © {new Date().getFullYear()} Polifracturas Ciénaga IPS S.A.S. · Matrícula Mercantil N° 0170648 · Ciénaga, Magdalena, Colombia · Todos los derechos reservados.
+      <div className="border-t border-white/10 py-4 text-center text-xs text-gray-400 space-y-1">
+        <p>© {new Date().getFullYear()} Polifracturas Ciénaga IPS S.A.S. · Matrícula Mercantil N° 0170648 · Ciénaga, Magdalena, Colombia · Todos los derechos reservados.</p>
+        <p>
+          <Link to="/politica-tratamiento-datos" className="hover:text-[#00A896] transition-colors">
+            Política de Tratamiento de Datos Personales
+          </Link>
+        </p>
       </div>
     </footer>
   )
