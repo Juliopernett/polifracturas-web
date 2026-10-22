@@ -3,6 +3,7 @@
   "name": "polifracturas-web",
   "main": "worker/index.js",
   "keep_vars": true,
+  "routes": [{ "pattern": "polifracturascienaga.com", "custom_domain": true }],
   "compatibility_date": "2026-09-01",
   "assets": {
     "directory": "client/dist",
